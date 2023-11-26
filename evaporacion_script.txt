@@ -1,0 +1,63 @@
+#Evaporacion
+ 
+evaporacion <- c(79.7, 87.3, 128.4, 146.5, 149.9, 123.9, 99.6, 105.5, 84.5, 70.1, 65.6, 74.1)
+especies <- c(6, 3, 4, 1, 2, 11, 24, 38, 40, 31, 15, 2)
+
+#Prueba de normalidad
+shapiro.test(especies)
+shapiro.test(evaporacion)
+##############################################################################################################################################################
+#grafico de puntos
+plot(especies~evaporacion)
+
+##Correlacion
+cor(especies, evaporacion)
+##############################################################################################################################################################
+#Regresion lineal
+especies.lsl <-lm(especies~evaporacion)
+summary(especies.lsl)
+
+#Coordenada a el origen y r^2
+coef(especies.lsl)
+
+fitted(especies.lsl)
+
+residuals(especies.lsl)
+##############################################################################################################################################################
+#Anova 
+anova(especies.lsl)
+
+plot(especies~evaporacion)
+abline(especies.lsl$coefficients, col="red", lwd=2)
+
+####################################################################################################################################################################
+
+#grafico de puntos sin intervalo de confianza ggplot2
+
+library(ggplot2)
+
+# Crear un dataframe llamado 'data' que contiene las variables 'especies', 'evaporacion' y 'class'
+data <- data.frame(especies = c(6, 3, 4, 1, 2, 11, 24, 38, 40, 31, 15, 2),
+                   evaporacion = c(79.7, 87.3, 128.4, 146.5, 149.9, 123.9, 99.6, 105.5, 84.5, 70.1, 65.6, 74.1),
+                   class = c('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l'))
+
+# Utilizar la función ggplot() para crear un gráfico
+ggplot(data, aes(evaporacion, especies)) + 
+ geom_point(colour = "black") + 
+ geom_smooth(method = lm, se = FALSE, color = "red")
+
+####################################################################################################################################################################
+
+#grafico de puntos con intervalo de confianza ggplot2
+
+library(ggplot2)
+
+# Crear un dataframe llamado 'data' que contiene las variables 'especies', 'evaporacion' y 'class'
+data <- data.frame(especies = c(6, 3, 4, 1, 2, 11, 24, 38, 40, 31, 15, 2),
+                   evaporacion = c(79.7, 87.3, 128.4, 146.5, 149.9, 123.9, 99.6, 105.5, 84.5, 70.1, 65.6, 74.1),
+                   class = c('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l'))
+
+# Utilizar la función ggplot() para crear un gráfico
+ggplot(data, aes(evaporacion, especies)) + 
+ geom_point(colour = "black") + 
+ geom_smooth(method = lm, se = TRUE, color = "red")

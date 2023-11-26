@@ -1,0 +1,64 @@
+#Precipitacion
+ 
+#Datos
+precipitacion <- c( 18.4, 23.5, 16.0, 35.9, 63.8, 184.1, 197.2, 181.7, 251.6, 129.9, 32.3, 11.2)
+especies <- c(6, 3, 4, 1, 2, 11, 24, 38, 40, 31, 15, 2)
+
+#Prueba de normalidad
+shapiro.test(especies)
+shapiro.test(precipitacion)
+####################################################################################################################################################################
+#grafico de puntos
+plot(especies~precipitacion)
+
+##Correlacion
+cor(especies, precipitacion)
+####################################################################################################################################################################
+#Regresion lineal
+especies.lsl <-lm(especies~precipitacion)
+summary(especies.lsl)
+
+#Coordenada a el origen y r^2
+coef(especies.lsl)
+
+fitted(especies.lsl)
+
+residuals(especies.lsl)
+####################################################################################################################################################################
+#Anova 
+anova(especies.lsl)
+
+plot(especies~precipitacion)
+abline(especies.lsl$coefficients, col="red", lwd=2)
+
+####################################################################################################################################################################
+
+#grafico de puntos ggplot2
+
+library(ggplot2)
+
+# Crear un dataframe llamado 'data' que contiene las variables 'especies', 'precipitacion' y 'class'
+data <- data.frame(especies = c(6, 3, 4, 1, 2, 11, 24, 38, 40, 31, 15, 2),
+                   precipitacion = c( 18.4, 23.5, 16.0, 35.9, 63.8, 184.1, 197.2, 181.7, 251.6, 129.9, 32.3, 11.2),
+                   class = c('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l'))
+
+# Utilizar la función ggplot() para crear un gráfico
+ggplot(data, aes(precipitacion, especies)) + 
+ geom_point(colour = "black") + 
+ geom_smooth(method = lm, se = FALSE, color = "red")
+
+####################################################################################################################################################################
+
+#grafico de puntos ggplot2
+
+library(ggplot2)
+
+# Crear un dataframe llamado 'data' que contiene las variables 'especies', 'precipitacion' y 'class'
+data <- data.frame(especies = c(6, 3, 4, 1, 2, 11, 24, 38, 40, 31, 15, 2),
+                   precipitacion = c( 18.4, 23.5, 16.0, 35.9, 63.8, 184.1, 197.2, 181.7, 251.6, 129.9, 32.3, 11.2),
+                   class = c('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l'))
+
+# Utilizar la función ggplot() para crear un gráfico
+ggplot(data, aes(precipitacion, especies)) + 
+ geom_point(colour = "black") + 
+ geom_smooth(method = lm, se = TRUE, color = "red")
